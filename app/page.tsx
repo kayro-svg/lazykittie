@@ -42,9 +42,9 @@ export default function Home() {
       <h1 className=" font-extrabold mb-5  text-2xl text-orange-950">Hello Cat Lover</h1>
       <span>✨</span>
       <p className="text-center text-orange-950"> This little project consisted in practicing LazyLoading images with Nextjs, React and Typescript</p>
-      <span className="mb-5 text-orange-950">✨let&apos;s see some kitties✨</span>
+      <span className="mb-5 text-orange-950">✨lets see some kitties✨</span>
       <button onClick={addNewFox} className="flex w-max justify-center  rounded-lg bg-orange-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-      >👇🏻 🐈 don&apos;t stop clicking 🐈 👇🏻</button>
+      >👇🏻 🐈 dont stop clicking 🐈 👇🏻</button>
       <div className="columns-1 space-y-2  gap-2 xs:columns-2 sm:columns-2 md:columns-3 lg:columns-3 mt-4">
 
         {images.map(({ id, url }) => {
