@@ -7,28 +7,56 @@ import { random } from "lodash";
 import axios from "axios";
 // import { url } from "inspector";
 
-const myRandom = () => random(1, 123);
+// const myRandom = () => random(1, 123);
 
-//comment
-//generate simple unique id
-const generateId = () => Math.random().toString(36).substr(2, 9);
-//comment
+// //comment
+// //generate simple unique id
+// const generateId = () => Math.random().toString(36).substr(2, 9);
+// //comment
 
 export default function Home() {
   const [images, setImages] = useState<Array<IFoxImageItem>>([]);
-  //   //uso de eventos y callbacks para gatos
-  const addNewFox: MouseEventHandler<HTMLButtonElement> = async () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    fetchFoxImage();
+  }, []); // Se ejecuta solo una vez al cargar el componente
+
+
+  const fetchFoxImage = async () => {
     try {
+      setIsLoading(true);
       const response = await axios.get('https://api.thecatapi.com/v1/images/search?api_key=live_QQ7Bp4GRUxiSSCiELSkKAwjSzgpcMOdGX3u11RyS86R6ySkidNrdhZzwplG8UU5u');
       const newImageItem: IFoxImageItem = {
         id: response.data[0].id,
         url: response.data[0].url
       };
-      setImages([...images, newImageItem])
+      setImages(prevImages => [...prevImages, newImageItem]);
+      setIsLoading(false);
     } catch (error) {
       console.error(error);
+      setIsLoading(false);
     }
-  }
+  };
+
+  const addNewFox: MouseEventHandler<HTMLButtonElement> = () => {
+    fetchFoxImage();
+  };
+
+
+  //   //uso de eventos y callbacks para gatos
+  // const addNewFox: MouseEventHandler<HTMLButtonElement> = async () => {
+  //   try {
+  //     const response = await axios.get('https://api.thecatapi.com/v1/images/search?api_key=live_QQ7Bp4GRUxiSSCiELSkKAwjSzgpcMOdGX3u11RyS86R6ySkidNrdhZzwplG8UU5u');
+  //     const newImageItem: IFoxImageItem = {
+  //       id: response.data[0].id,
+  //       url: response.data[0].url
+  //     };
+  //     setImages([...images, newImageItem])
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
   //uso de eventos y callbacks para foxes
   //  const addNewFox: MouseEventHandler<HTMLButtonElement> = (event) => {
   //   const newImageItem: IFoxImageItem ={
@@ -39,12 +67,13 @@ export default function Home() {
   // }
   return (
     <main className="flex min-h-screen flex-col items-center p-10 xs:p-5">
-      <h1 className=" font-extrabold mb-5  text-2xl text-orange-950">Hello Cat Lover</h1>
+      {/* <h1 className=" font-extrabold mb-5  text-2xl text-orange-950">Hello Cat Lover</h1>
       <span>✨</span>
       <p className="text-center text-orange-950"> This little project consisted in practicing LazyLoading images with Nextjs, React and Typescript</p>
-      <span className="mb-5 text-orange-950">✨lets see some kitties✨</span>
-      <button onClick={addNewFox} className="flex w-max justify-center  rounded-lg bg-orange-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-      >👇🏻 🐈 dont stop clicking 🐈 👇🏻</button>
+      <span className="mb-5">✨</span> */}
+      <button onClick={addNewFox} disabled={isLoading} className="z-50 fixed bottom-4 right-4 flex justify-center items-center rounded-lg bg-orange-400 px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+      >🐈✨dont stop clicking 🔁</button>
+
       <div className="columns-1 space-y-2  gap-2 xs:columns-2 sm:columns-2 md:columns-3 lg:columns-3 mt-4">
 
         {images.map(({ id, url }) => {
